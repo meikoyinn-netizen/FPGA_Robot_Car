@@ -3,11 +3,11 @@
 # SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
 # IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
 # SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
-# Start of session at: Fri Jan  9 17:02:40 2026
-# Process ID: 5876
+# Start of session at: Mon Jan 19 19:02:41 2026
+# Process ID: 5988
 # Current directory: E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/cpu_test2/project_1/project_1.runs/impl_1
-# Command line: vivado.exe -log fpga_top.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source fpga_top.tcl -notrace
-# Log file: E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/cpu_test2/project_1/project_1.runs/impl_1/fpga_top.vdi
+# Command line: vivado.exe -log riscv_top.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source riscv_top.tcl -notrace
+# Log file: E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/cpu_test2/project_1/project_1.runs/impl_1/riscv_top.vdi
 # Journal file: E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/cpu_test2/project_1/project_1.runs/impl_1\vivado.jou
 # Running On        :LAPTOP-RFCDB03I
 # Platform          :Windows Server 2016 or Windows 10
@@ -17,8 +17,8 @@
 # CPU Physical cores:4
 # CPU Logical cores :8
 # Host memory       :8468 MB
-# Swap memory       :4563 MB
-# Total Virtual     :13031 MB
-# Available Virtual :4805 MB
+# Swap memory       :5865 MB
+# Total Virtual     :14333 MB
+# Available Virtual :2982 MB
 #-----------------------------------------------------------
-source fpga_top.tcl -notrace
+source riscv_top.tcl -notrace
