@@ -1,0 +1,19 @@
+# =============================================================================
+# MicroPhase A7-Lite 最终适配约束 (fpga_top专用)
+# =============================================================================
+
+# 1. 系统时钟 (代码叫 sys_clk -> 连板子 Y18)
+set_property -dict { PACKAGE_PIN Y18  IOSTANDARD LVCMOS33 } [get_ports { sys_clk }]
+create_clock -add -name sys_clk_pin -period 20.00 -waveform {0 10} [get_ports { sys_clk }]
+
+# 2. 复位按键 (代码叫 sys_rst_n -> 连板子 M19)
+set_property -dict { PACKAGE_PIN M19  IOSTANDARD LVCMOS33 } [get_ports { sys_rst_n }]
+
+# 3. LED 灯 (代码叫 led[0]/led[1] -> 连板子 J19/K19)
+set_property -dict { PACKAGE_PIN J19  IOSTANDARD LVCMOS33 } [get_ports { led[0] }]
+set_property -dict { PACKAGE_PIN K19  IOSTANDARD LVCMOS33 } [get_ports { led[1] }]
+
+# 4. 必加配置
+set_property CFGBVS VCCO [current_design]
+set_property CONFIG_VOLTAGE 3.3 [current_design]
+set_property BITSTREAM.GENERAL.COMPRESS TRUE [current_design]
