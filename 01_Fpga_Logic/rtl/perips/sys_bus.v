@@ -1,9 +1,11 @@
 `timescale 1ns / 1ps
+// NOTE: Keep this file containing only the sys_bus module to avoid duplicate definitions.
 
 module sys_bus(
     // Master: CPU
     input  wire [31:0] cpu_addr,
     input  wire [31:0] cpu_wdata,
+    input  wire [3:0]  cpu_wmask,
     input  wire        cpu_wen,
     output reg  [31:0] cpu_rdata,
 
@@ -13,6 +15,7 @@ module sys_bus(
     // Slave 1: DMEM
     input  wire [31:0] dmem_rdata,
     output wire        dmem_wen,
+    output wire [3:0]  dmem_wmask,
 
     // Slave 2: GPIO
     input  wire [31:0] gpio_rdata,
@@ -39,6 +42,7 @@ module sys_bus(
 
     // 写数据广播
     assign uart_wdata = cpu_wdata;
+    assign dmem_wmask = (addr_head == ADDR_DMEM) ? cpu_wmask : 4'b0000;
 
     // ★★★ 关键修复 2: 读数据选择逻辑 ★★★
     always @(*) begin

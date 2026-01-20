@@ -1,8 +1,10 @@
 `timescale 1ns / 1ps
+// NOTE: Keep this file containing only the my_dmem module to avoid duplicate definitions.
 
 module my_dmem(
     input  wire        clk,
     input  wire        we_i,
+    input  wire [3:0]  wmask_i,
     input  wire [31:0] addr_i,
     input  wire [31:0] data_i,
     output wire [31:0] data_o
@@ -26,7 +28,10 @@ module my_dmem(
 
     always @(posedge clk) begin
         if (we_i) begin
-            ram[real_addr] <= data_i;
+            if (wmask_i[0]) ram[real_addr][7:0]   <= data_i[7:0];
+            if (wmask_i[1]) ram[real_addr][15:8]  <= data_i[15:8];
+            if (wmask_i[2]) ram[real_addr][23:16] <= data_i[23:16];
+            if (wmask_i[3]) ram[real_addr][31:24] <= data_i[31:24];
         end
     end
 
