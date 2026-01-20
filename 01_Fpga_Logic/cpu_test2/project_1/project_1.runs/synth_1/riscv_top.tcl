@@ -72,9 +72,11 @@ set_property ip_output_repo e:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/cpu_test2/
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
+read_mem E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/rtl/core/Instruction_Fetch/firmware.mem
 read_verilog -library xil_defaultlib {
   E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/rtl/core/Execution/my_alu.v
   E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/rtl/core/Instruction_Decode/my_decoder.v
+  E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/rtl/core/Execution/my_dmem.v
   E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/rtl/core/Instruction_Fetch/my_imem.v
   E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/rtl/core/Instruction_Fetch/my_pc_reg.v
   E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/rtl/core/Instruction_Decode/my_regfile.v

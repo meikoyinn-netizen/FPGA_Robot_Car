@@ -1,86 +1,29 @@
 `timescale 1ns / 1ps
 
 module my_imem(
+    // 端口 A: 给 PC 取指用 (Instruction Fetch)
     input  wire [31:0] addr,
-    output wire [31:0] rdata
+    output wire [31:0] rdata,
+    
+    // ★★★ 端口 B: 给总线读数据用 (Data Load) ★★★
+    input  wire [31:0] data_addr, // 来自 ALU 的地址
+    output wire [31:0] data_rdata // 读出的数据发给总线
 );
-    reg [31:0] mem [0:255];
+
+    // 32KB 内存
+    reg [31:0] mem [0:8191];
 
     initial begin
-        // =============================================================
-        //  RISC-V 终极程序：Hello World! (硬件流控版)
-        //  特点：无软件延时，全速运行，依靠 cpu_stall 自动同步
-        // =============================================================
-        
-        // 1. 初始化串口地址 x1 = 0x30000000
-        mem[0] = 32'h00300_093; // addi x1, x0, 3
-        mem[1] = 32'h01c09_093; // slli x1, x1, 28
-
-        // --- 循环开始 (地址 8) ---
-
-        // 'H'
-        mem[2] = 32'h04800_113; // addi x2, x0, 'H'
-        mem[3] = 32'h0020a_023; // sw   x2, 0(x1) -> 硬件会自动暂停CPU等待发送
-
-        // 'e'
-        mem[4] = 32'h06500_113; 
-        mem[5] = 32'h0020a_023;
-
-        // 'l'
-        mem[6] = 32'h06c00_113; 
-        mem[7] = 32'h0020a_023; 
-
-        // 'l'
-        mem[8] = 32'h06c00_113; 
-        mem[9] = 32'h0020a_023; 
-
-        // 'o'
-        mem[10]= 32'h06f00_113; 
-        mem[11]= 32'h0020a_023; 
-
-        // ' ' (空格)
-        mem[12]= 32'h02000_113; 
-        mem[13]= 32'h0020a_023; 
-
-        // 'W'
-        mem[14]= 32'h05700_113; 
-        mem[15]= 32'h0020a_023; 
-
-        // 'o'
-        mem[16]= 32'h06f00_113; 
-        mem[17]= 32'h0020a_023; 
-
-        // 'r'
-        mem[18]= 32'h07200_113; 
-        mem[19]= 32'h0020a_023; 
-
-        // 'l'
-        mem[20]= 32'h06c00_113; 
-        mem[21]= 32'h0020a_023; 
-
-        // 'd'
-        mem[22]= 32'h06400_113; 
-        mem[23]= 32'h0020a_023; 
-
-        // '!'
-        mem[24]= 32'h02100_113; 
-        mem[25]= 32'h0020a_023; 
-
-        // --- 修复格式乱的问题 ---
-        
-        // 发送 '\r' (回车 Return) -> 光标回到行首
-        mem[26]= 32'h00d00_113; 
-        mem[27]= 32'h0020a_023; 
-
-        // 发送 '\n' (换行 NewLine) -> 光标下移
-        mem[28]= 32'h00a00_113; 
-        mem[29]= 32'h0020a_023; 
-
-        // --- 绝对跳转回开头 (地址 8) ---
-        mem[30]= 32'h00800_313; // addi x6, x0, 8
-        mem[31]= 32'h00030_067; // jalr x0, 0(x6)
+        // ⚠️ 请改为您电脑上的实际绝对路径！例如：
+        // $readmemh("D:/FPGA_Project/src/firmware.mem", mem); 
+        $readmemh("E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/rtl/core/Instruction_Fetch/firmware.mem", mem);
     end
 
-    assign rdata = mem[addr[9:2]];
+    // 端口 A 逻辑 (取指)
+    assign rdata = mem[addr[14:2]];
+
+    // ★★★ 端口 B 逻辑 (读数据) ★★★
+    // 逻辑完全一样，只是地址源不同
+    assign data_rdata = mem[data_addr[14:2]];
 
 endmodule
