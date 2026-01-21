@@ -18,7 +18,10 @@ module uart_mmio #(
     input  wire        req_accept,
 
     input  wire        tx_busy,
-    output wire [31:0] mmio_rdata
+    output wire [31:0] mmio_rdata,
+    output wire        fifo_full_o,
+    output wire [FIFO_AW:0] fifo_count_o,
+    output wire        tx_fire_o
 );
 
     localparam UART_TXDATA = 2'b00;
@@ -34,8 +37,9 @@ module uart_mmio #(
     wire fifo_empty = (count == 0);
 
     wire write_txdata = bus_valid && bus_write && (addr_word == UART_TXDATA);
-    assign uart_ready = write_txdata ? (!(fifo_full || tx_busy)) : 1'b1;
+    assign uart_ready = !fifo_full;
     wire write_fire = write_txdata && uart_ready;
+    assign tx_fire_o = write_fire;
 
     // 入队（只在上升沿）
     always @(posedge clk or negedge rst_n) begin
@@ -71,9 +75,12 @@ module uart_mmio #(
 
     assign req_valid = !fifo_empty;
     assign req_data  = fifo_mem[rd_ptr];
+    assign fifo_full_o = fifo_full;
+    assign fifo_count_o = count;
 
-    // bit0=tx_busy, bit1=empty, bit2=full, [15:8]=count(补零到8位)
-    wire [31:0] status_rdata = {16'b0, {3'b0, count}, 5'b0, fifo_full, fifo_empty, tx_busy};
+    // bit0=tx_busy, bit1=empty, bit2=full, bit3=tx_ready, [15:8]=count(补零到8位)
+    wire        tx_ready = !fifo_full;
+    wire [31:0] status_rdata = {16'b0, {3'b0, count}, 4'b0, tx_ready, fifo_full, fifo_empty, tx_busy};
     assign mmio_rdata = (addr_word == UART_STATUS) ? status_rdata : 32'b0;
 
 endmodule

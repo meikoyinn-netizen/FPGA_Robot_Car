@@ -55,6 +55,9 @@ module riscv_top(
     wire        bus_uart_ready;
     wire        fifo_valid, tx_busy_wire, handshake_ack;
     wire [7:0]  fifo_data;
+    wire        uart_fifo_full;
+    wire [4:0]  uart_fifo_count;
+    wire        uart_tx_fire;
 
     // DMEM 信号
     wire [31:0] bus_dmem_rdata;
@@ -216,7 +219,8 @@ module riscv_top(
         .clk(sys_clk), .rst_n(sys_rst_n_internal), 
         .bus_valid(dbus_valid), .bus_write(mem_wen), .bus_wdata(bus_uart_wdata), .bus_addr(dbus_addr), .uart_ready(bus_uart_ready),
         .mmio_rdata(bus_uart_rdata),
-        .req_valid(fifo_valid), .req_data(fifo_data), .req_accept(handshake_ack), .tx_busy(tx_busy_wire)
+        .req_valid(fifo_valid), .req_data(fifo_data), .req_accept(handshake_ack), .tx_busy(tx_busy_wire),
+        .fifo_full_o(uart_fifo_full), .fifo_count_o(uart_fifo_count), .tx_fire_o(uart_tx_fire)
     );
 
     // UART TX (50MHz)
@@ -224,6 +228,19 @@ module riscv_top(
         .clk(sys_clk), .rst_n(sys_rst_n_internal),
         .data_i(fifo_data), .en_i(handshake_ack), 
         .tx_pin(uart_tx), .busy_o(tx_busy_wire)
+    );
+
+    ila_0 u_ila_0 (
+        .clk(sys_clk),
+        .probe0(pc_wire[15:0]),
+        .probe1(dbus_valid),
+        .probe2(dbus_ready),
+        .probe3(dbus_addr),
+        .probe4(dbus_wstrb),
+        .probe5(bus_uart_ready),
+        .probe6(uart_fifo_full),
+        .probe7(uart_fifo_count),
+        .probe8(uart_tx_fire)
     );
 
 endmodule

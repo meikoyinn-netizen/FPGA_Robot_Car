@@ -37,6 +37,8 @@ module sys_bus(
     localparam ADDR_UART = 4'h3; // 0x3000_xxxx
 
     wire [3:0] addr_head = cpu_addr[31:28];
+    wire [1:0] uart_word = cpu_addr[3:2];
+    wire       uart_txdata_sel = (uart_word == 2'b00);
 
     // 写使能分发 (仅在 valid 且 ready 时生效)
     assign dmem_wen = cpu_valid && cpu_wen && bus_ready && (addr_head == ADDR_DMEM);
@@ -63,8 +65,11 @@ module sys_bus(
         bus_ready = 1'b1;
         case (addr_head)
             ADDR_UART: begin
-                if (cpu_valid && cpu_wen) bus_ready = uart_ready;
-                else         bus_ready = 1'b1;
+                if (cpu_valid && cpu_wen && uart_txdata_sel) begin
+                    bus_ready = uart_ready;
+                end else begin
+                    bus_ready = 1'b1;
+                end
             end
             ADDR_IMEM,
             ADDR_DMEM,

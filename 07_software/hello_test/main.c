@@ -5,9 +5,15 @@
 // ============================================================================
 // UART 发送寄存器 (只写)
 #define UART_TX_ADDR 0x30000000
+// UART 状态寄存器 (只读)
+#define UART_STATUS_ADDR 0x30000004
 
 // 定义指针：volatile 告诉编译器不要优化，每次都要真去读写该地址
-#define UART_TX_PTR  ((volatile uint32_t *)UART_TX_ADDR)
+#define UART_TX_PTR     ((volatile uint32_t *)UART_TX_ADDR)
+#define UART_STATUS_PTR ((volatile uint32_t *)UART_STATUS_ADDR)
+
+// STATUS bit3 = tx_ready (1: 可写)
+#define UART_STATUS_TX_READY (1u << 3)
 
 // ============================================================================
 // 2. 驱动函数
@@ -22,10 +28,9 @@ void delay(int count) {
 
 // 发送一个字符
 void uart_putc(char c) {
-    // 之前我们需要 while(busy); 
-    // 但现在您的 riscv_top.v 里有 cpu_stall = bus_uart_wen & tx_busy;
-    // 这意味着如果串口忙，CPU 会自动停在这一行指令上不动。
-    // 所以我们可以直接写！这就是硬件流控的威力。
+    while (((*UART_STATUS_PTR) & UART_STATUS_TX_READY) == 0u) {
+        asm volatile("nop");
+    }
     *UART_TX_PTR = c;
 }
 
@@ -46,7 +51,7 @@ void print_str(const char *str) {
 
 // 打印十进制单个数字
 void print_digit(int value) {
-    uart_putc('0' + (value % 10));
+    uart_putc('0' + value);
 }
 
 // ============================================================================
