@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2024.1 (win64) Build 5076996 Wed May 22 18:37:14 MDT 2024
-| Date             : Tue Jan 20 22:48:50 2026
+| Date             : Wed Jan 21 11:25:04 2026
 | Host             : LAPTOP-RFCDB03I running 64-bit major release  (build 9200)
 | Command          : report_power -file riscv_top_power_routed.rpt -pb riscv_top_power_summary_routed.pb -rpx riscv_top_power_routed.rpx
 | Design           : riscv_top
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.104        |
+| Total On-Chip Power (W)  | 0.099        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.032        |
+| Dynamic (W)              | 0.028        |
 | Device Static (W)        | 0.072        |
 | Effective TJA (C/W)      | 2.8          |
 | Max Ambient (C)          | 84.7         |
@@ -53,17 +53,17 @@ Table of Contents
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
 | Clocks                   |     0.003 |        3 |       --- |             --- |
-| Slice Logic              |     0.004 |     5267 |       --- |             --- |
-|   LUT as Logic           |     0.003 |     1063 |     20800 |            5.11 |
+| Slice Logic              |     0.004 |     5488 |       --- |             --- |
+|   LUT as Logic           |     0.003 |     1302 |     20800 |            6.26 |
 |   LUT as Distributed RAM |    <0.001 |     2092 |      9600 |           21.79 |
 |   CARRY4                 |    <0.001 |       55 |      8150 |            0.67 |
-|   F7/F8 Muxes            |    <0.001 |     1624 |     32600 |            4.98 |
-|   Register               |    <0.001 |      232 |     41600 |            0.56 |
-|   Others                 |     0.000 |        9 |       --- |             --- |
-| Signals                  |     0.025 |     1985 |       --- |             --- |
+|   F7/F8 Muxes            |    <0.001 |     1609 |     32600 |            4.94 |
+|   Register               |    <0.001 |      231 |     41600 |            0.56 |
+|   Others                 |     0.000 |        7 |       --- |             --- |
+| Signals                  |     0.020 |     2222 |       --- |             --- |
 | I/O                      |    <0.001 |        3 |       250 |            1.20 |
 | Static Power             |     0.072 |          |           |                 |
-| Total                    |     0.104 |          |           |                 |
+| Total                    |     0.099 |          |           |                 |
 +--------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -73,7 +73,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.041 |       0.032 |      0.010 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     0.037 |       0.027 |      0.010 |       NA    | Unspecified | NA         |
 | Vccaux    |       1.800 |     0.013 |       0.000 |      0.013 |       NA    | Unspecified | NA         |
 | Vcco33    |       3.300 |     0.001 |       0.000 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -142,9 +142,10 @@ Table of Contents
 +-------------+-----------+
 | Name        | Power (W) |
 +-------------+-----------+
-| riscv_top   |     0.032 |
+| riscv_top   |     0.028 |
 |   u_dmem    |     0.003 |
-|   u_pc_reg  |     0.027 |
+|   u_imem    |     0.001 |
+|   u_pc_reg  |     0.021 |
 |   u_regfile |     0.001 |
 +-------------+-----------+
 

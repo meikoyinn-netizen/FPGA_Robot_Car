@@ -3,8 +3,8 @@
 # SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
 # IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
 # SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
-# Start of session at: Tue Jan 20 22:44:36 2026
-# Process ID: 16304
+# Start of session at: Wed Jan 21 11:19:41 2026
+# Process ID: 4704
 # Current directory: E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/cpu_test2/project_1/project_1.runs/synth_1
 # Command line: vivado.exe -log riscv_top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source riscv_top.tcl
 # Log file: E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/cpu_test2/project_1/project_1.runs/synth_1/riscv_top.vds
@@ -17,8 +17,8 @@
 # CPU Physical cores:4
 # CPU Logical cores :8
 # Host memory       :8468 MB
-# Swap memory       :13105 MB
-# Total Virtual     :21573 MB
-# Available Virtual :3683 MB
+# Swap memory       :5637 MB
+# Total Virtual     :14105 MB
+# Available Virtual :2943 MB
 #-----------------------------------------------------------
 source riscv_top.tcl -notrace

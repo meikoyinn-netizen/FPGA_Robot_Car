@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2024.1 (win64) Build 5076996 Wed May 22 18:37:14 MDT 2024
-| Date         : Tue Jan 20 22:48:46 2026
+| Date         : Wed Jan 21 11:25:00 2026
 | Host         : LAPTOP-RFCDB03I running 64-bit major release  (build 9200)
 | Command      : report_methodology -file riscv_top_methodology_drc_routed.rpt -pb riscv_top_methodology_drc_routed.pb -rpx riscv_top_methodology_drc_routed.rpx
 | Design       : riscv_top
@@ -23,13 +23,14 @@ Table of Contents
           Floorplan: design_1
       Design limits: <entire design considered>
              Max violations: <unlimited>
-             Violations found: 515
+             Violations found: 516
 +-----------+----------+-----------------------------------------------------------+------------+
 | Rule      | Severity | Description                                               | Violations |
 +-----------+----------+-----------------------------------------------------------+------------+
 | LUTAR-1   | Warning  | LUT drives async reset alert                              | 1          |
 | SYNTH-5   | Warning  | Mapped onto distributed RAM because of timing constraints | 512        |
 | TIMING-18 | Warning  | Missing input or output delay                             | 2          |
+| TIMING-23 | Warning  | Combinational loop found                                  | 1          |
 +-----------+----------+-----------------------------------------------------------+------------+
 
 2. REPORT DETAILS
@@ -43,7 +44,7 @@ u_uart_tx/shifter_reg[2]/CLR, u_uart_tx/shifter_reg[3]/CLR,
 u_uart_tx/shifter_reg[4]/CLR, u_uart_tx/shifter_reg[5]/CLR,
 u_uart_tx/shifter_reg[6]/CLR, u_uart_tx/shifter_reg[7]/CLR,
 u_uart_tx/shifter_reg[8]/CLR, u_uart_tx/state_reg/CLR,
-u_uart_tx/tx_pin_reg/PRE (the first 15 of 70 listed). The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+u_uart_tx/tx_pin_reg/PRE (the first 15 of 69 listed). The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
 Related violations: <none>
 
 SYNTH-5#1 Warning
@@ -2614,6 +2615,11 @@ Related violations: <none>
 TIMING-18#2 Warning
 Missing input or output delay  
 An output delay is missing on uart_tx relative to the rising and/or falling clock edge(s) of sys_clk_pin.
+Related violations: <none>
+
+TIMING-23#1 Warning
+Combinational loop found  
+A timing loop has been detected on a combinational path. A timing arc has been disabled between u_pc_reg/pc[31]_i_13/I1 and u_pc_reg/pc[31]_i_13/O to disable the timing loop
 Related violations: <none>
 
 

@@ -44,24 +44,25 @@ void print_str(const char *str) {
     }
 }
 
+// 打印十进制单个数字
+void print_digit(int value) {
+    uart_putc('0' + (value % 10));
+}
+
 // ============================================================================
 // 3. 主函数
 // ============================================================================
 int main() {
-    // ⚠️ 注意：
-    // 如果您的 sys_bus 不支持读取 Instruction Memory (0x0000...)
-    // 那么 char *s = "hello" (放在 .rodata) 可能会读出 0。
-    // 为了稳妥，我们使用 "char s[]" 语法，强制编译器在栈(DMEM)上构造字符串。
-    // 因为我们确信 Store/Load (DMEM) 是能工作的。
-    
-    char msg[] = "hello xlx from C Language!\n";
+    char hello[] = "Hello\n";
+
+    print_str(hello);
 
     while (1) {
-        // 打印字符串
-        print_str(msg);
-
-        // 延时，防止刷屏太快
-        delay(1000000); 
+        for (int i = 0; i < 10; i++) {
+            print_digit(i);
+            uart_putc('\n');
+            delay(300000);
+        }
     }
 
     return 0; // 永远不会运行到这里
