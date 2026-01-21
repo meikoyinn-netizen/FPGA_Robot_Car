@@ -56,6 +56,7 @@ if {$::dispatch::connected} {
 }
 
 OPTRACE "synth_1" START { ROLLUP_AUTO }
+set_param tcl.collectionResultDisplayLimit 0
 set_param chipscope.maxJobs 2
 set_param xicom.use_bs_reader 1
 OPTRACE "Creating in-memory project" START { }
@@ -74,7 +75,6 @@ OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_mem E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/rtl/core/Instruction_Fetch/firmware.mem
 read_verilog -library xil_defaultlib {
-  E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/rtl/top/ila_0.v
   E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/rtl/core/Execution/my_alu.v
   E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/rtl/core/Instruction_Decode/my_decoder.v
   E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/rtl/core/Execution/my_dmem.v

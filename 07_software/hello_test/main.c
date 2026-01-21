@@ -1,74 +1,53 @@
 #include <stdint.h>
+#include <stdio.h>
 
-// ============================================================================
-// 1. 硬件地址定义
-// ============================================================================
-// UART 发送寄存器 (只写)
-#define UART_TX_ADDR 0x30000000
-// UART 状态寄存器 (只读)
-#define UART_STATUS_ADDR 0x30000004
+#define UART_TX_ADDR        0x30000000u
+#define UART_STATUS_ADDR    0x30000004u
 
-// 定义指针：volatile 告诉编译器不要优化，每次都要真去读写该地址
 #define UART_TX_PTR     ((volatile uint32_t *)UART_TX_ADDR)
 #define UART_STATUS_PTR ((volatile uint32_t *)UART_STATUS_ADDR)
 
-// STATUS bit3 = tx_ready (1: 可写)
 #define UART_STATUS_TX_READY (1u << 3)
 
-// ============================================================================
-// 2. 驱动函数
-// ============================================================================
-
-// 简单的延时函数
-void delay(int count) {
+static void delay(volatile uint32_t count) {
     while (count--) {
-        asm volatile("nop"); // 防止编译器把空循环优化掉
+        __asm__ volatile("nop");
     }
 }
 
-// 发送一个字符
+// ⚠️ 必须不是 static，让 syscalls.c 里的 extern void uart_putc 能链接到
 void uart_putc(char c) {
     while (((*UART_STATUS_PTR) & UART_STATUS_TX_READY) == 0u) {
-        asm volatile("nop");
+        __asm__ volatile("nop");
     }
-    *UART_TX_PTR = c;
+    *UART_TX_PTR = (uint32_t)(uint8_t)c;
 }
 
-// 打印字符串
-void print_str(const char *str) {
-    while (*str != '\0') {
-        char c = *str;
-        
-        // 自动处理换行：遇到 \n 自动补一个 \r，防止“阶梯状”输出
-        if (c == '\n') {
-            uart_putc('\r'); // 回到行首
-        }
-        
+static void uart_puts(const char *s) {
+    while (*s) {
+        char c = *s++;
+        if (c == '\n') uart_putc('\r');
         uart_putc(c);
-        str++;
     }
 }
 
-// 打印十进制单个数字
-void print_digit(int value) {
-    uart_putc('0' + value);
-}
+int main(void) {
+    // 先用直写确认系统活着
+    uart_puts("RUN_PRINTF_TEST_20260121\r\n");
 
-// ============================================================================
-// 3. 主函数
-// ============================================================================
-int main() {
-    char hello[] = "Hello\n";
-
-    print_str(hello);
+    // 再用 printf 验证 retarget 是否成功
+    printf("PRINTF_OK\r\n");
 
     while (1) {
-        for (int i = 0; i < 10; i++) {
-            print_digit(i);
-            uart_putc('\n');
-            delay(300000);
-        }
-    }
+        // 先输出固定串（最稳）
+        printf("0123456789\r\n");
 
-    return 0; // 永远不会运行到这里
+        // 再输出递增数字（下一步）
+        static int x = 0;
+        printf("x=%d\r\n", x++);
+        if (x >= 10) x = 0;
+
+        delay(300000u);
+    }
+    return 0;
 }

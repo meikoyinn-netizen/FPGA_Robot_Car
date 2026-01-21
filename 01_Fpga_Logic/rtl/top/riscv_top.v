@@ -104,10 +104,14 @@ module riscv_top(
     );
 
     // 指令存储器
-    my_imem u_imem (
-        .addr(pc_wire), .rdata(inst_wire),
-        .data_addr(alu_result), .data_rdata(bus_imem_rdata)
-    );
+   my_imem u_imem (
+    .addr(pc_wire),
+    .rdata(inst_wire),
+    .data_addr(alu_result),
+    .data_rdata(bus_imem_rdata)
+);
+
+
 
     // 译码器 (已连接跳转信号)
     my_decoder u_decoder (
@@ -230,6 +234,12 @@ module riscv_top(
         .tx_pin(uart_tx), .busy_o(tx_busy_wire)
     );
 
+    // ==========================
+    // Optional ILA (default OFF)
+    // 打开方法：在工程的全局宏里加 `define USE_ILA
+    // 或者在本文件顶部手动加：`define USE_ILA
+    // ==========================
+`ifdef USE_ILA
     ila_0 u_ila_0 (
         .clk(sys_clk),
         .probe0(pc_wire[15:0]),
@@ -242,5 +252,7 @@ module riscv_top(
         .probe7(uart_fifo_count),
         .probe8(uart_tx_fire)
     );
+`endif
 
 endmodule
+

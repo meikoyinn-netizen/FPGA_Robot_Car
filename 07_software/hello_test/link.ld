@@ -1,33 +1,58 @@
-/* link.ld - 告诉 GCC 我们的内存布局 */
+/* link.ld - GCC 链接脚本：IMEM/DMEM 内存布局 */
 OUTPUT_ARCH(riscv)
-ENTRY(_start)   /* 程序入口标签叫 _start */
+ENTRY(_start)
 
 MEMORY
 {
-    /* 这里的 LENGTH 需要根据您 Verilog 中实际 IMEM/DMEM 大小修改 */
-    /* 假设 IMEM 是 16KB, DMEM 是 16KB */
-    IMEM (rx) : ORIGIN = 0x00000000, LENGTH = 16K
-    DMEM (rw) : ORIGIN = 0x10000000, LENGTH = 16K
+  /* ✅ 扩大 IMEM：原来 16K -> 128K（你硬件也要同步改 my_imem.v） */
+  IMEM (rx) : ORIGIN = 0x00000000, LENGTH = 128K
+
+  /* DMEM 先保持 16K（按你原脚本） */
+  DMEM (rw) : ORIGIN = 0x10000000, LENGTH = 16K
 }
 
 SECTIONS
 {
-    /* 代码段：放在 IMEM */
-    .text : {
-        *(.text)      /* 所有的代码 */
-    } > IMEM
+  /* 代码段 */
+  .text : ALIGN(4)
+  {
+    KEEP(*(.text._start))
+    *(.text .text.*)
+    *(.init)
+    *(.fini)
+  } > IMEM
 
-    /* 数据段：放在 DMEM */
-    .data : {
-        *(.data)
-    } > DMEM
+  /* 只读数据（字符串常量、格式化字符串等会在这里，非常关键） */
+  .rodata : ALIGN(4)
+  {
+    *(.rodata .rodata.*)
+    *(.srodata .srodata.*)
+  } > IMEM
 
-    /* 堆栈段：虽然我们还没有复杂的栈，但为了安全，让 SP 指向 DMEM 结尾 */
-    /* .bss 是未初始化的变量 */
-    .bss : {
-        *(.bss)
-    } > DMEM
-    
-    /* 定义一个符号，告诉启动代码堆栈顶在哪里 (DMEM 尾部) */
-    PROVIDE(_stack_top = ORIGIN(DMEM) + LENGTH(DMEM));
+  /* 已初始化数据：加载镜像在 IMEM，运行地址在 DMEM */
+  .data : ALIGN(4)
+  {
+    _sdata = .;
+    *(.data .data.*)
+    *(.sdata .sdata.*)
+    _edata = .;
+  } > DMEM AT > IMEM
+  _sidata = LOADADDR(.data);
+
+  /* 未初始化数据 */
+  .bss : ALIGN(4)
+  {
+    _sbss = .;
+    *(.bss .bss.*)
+    *(.sbss .sbss.*)
+    *(COMMON)
+    _ebss = .;
+  } > DMEM
+
+  /* ✅ heap end：给 _sbrk 用（修复你报的 undefined reference to _end） */
+  _end = .;
+  PROVIDE(end = .);
+
+  /* 栈顶：DMEM 尾部 */
+  PROVIDE(_stack_top = ORIGIN(DMEM) + LENGTH(DMEM));
 }

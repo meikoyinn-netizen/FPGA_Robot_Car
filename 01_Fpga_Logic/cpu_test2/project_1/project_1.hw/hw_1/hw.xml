@@ -21,9 +21,9 @@
   </ObjectList>
   <ObjectList object_type="hw_device" gui_info="">
     <Object name="xc7a35t_0" gui_info="">
-      <Properties Property="FULL_PROBES.FILE" value="$_project_name_.runs/impl_1/riscv_top.ltx"/>
-      <Properties Property="PROBES.FILE" value="$_project_name_.runs/impl_1/riscv_top.ltx"/>
-      <Properties Property="PROGRAM.HW_BITSTREAM" value="E:/lky/vivado/Vivado/2024.1/data/xicom/cfgmem/bitfile/spi_xc7a35t_pullnone.bit"/>
+      <Properties Property="FULL_PROBES.FILE" value=""/>
+      <Properties Property="PROBES.FILE" value=""/>
+      <Properties Property="PROGRAM.HW_BITSTREAM" value="$_project_name_.runs/impl_1/riscv_top.bit"/>
       <Properties Property="PROGRAM.HW_CFGMEM_PART" value="is25lp128f-spi-x1_x2_x4"/>
       <Properties Property="SLR.COUNT" value="1"/>
     </Object>
@@ -77,7 +77,7 @@
         <net name="u_pc_reg/dbus_valid"/>
       </nets>
     </probe>
-    <probe type="ila" busType="bus" source="netlist" spec="ILA_V2_RT">
+    <probe type="ila" busType="net" source="netlist" spec="ILA_V2_RT">
       <probeOptions Id="DebugProbeParams">
         <Option Id="CAPTURE_COMPARE_VALUE" value="eq30&apos;hXXXX_XXXX"/>
         <Option Id="COMPARE_VALUE.0" value="eq30&apos;hXXXX_XXXX"/>
@@ -148,7 +148,7 @@
         <net name="u_uart_mmio/bus_uart_ready"/>
       </nets>
     </probe>
-    <probe type="ila" busType="bus" source="netlist" spec="ILA_V2_RT">
+    <probe type="ila" busType="net" source="netlist" spec="ILA_V2_RT">
       <probeOptions Id="DebugProbeParams">
         <Option Id="CAPTURE_COMPARE_VALUE" value="eq5&apos;hXX"/>
         <Option Id="COMPARE_VALUE.0" value="eq5&apos;hXX"/>

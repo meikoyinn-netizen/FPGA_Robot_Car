@@ -104,15 +104,34 @@ start_step init_design
 set ACTIVE_STEP init_design
 set rc [catch {
   create_msg_db init_design.pb
+  set_param tcl.collectionResultDisplayLimit 0
   set_param chipscope.maxJobs 2
   set_param xicom.use_bs_reader 1
   set_param runs.launchOptions { -jobs 4  }
-  reset_param project.defaultXPMLibraries 
-  open_checkpoint E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/cpu_test2/project_1/project_1.runs/impl_1/riscv_top.dcp
+OPTRACE "create in-memory project" START { }
+  create_project -in_memory -part xc7a35tfgg484-2
+  set_property design_mode GateLvl [current_fileset]
+  set_param project.singleFileAddWarning.threshold 0
+OPTRACE "create in-memory project" END { }
+OPTRACE "set parameters" START { }
   set_property webtalk.parent_dir E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/cpu_test2/project_1/project_1.cache/wt [current_project]
   set_property parent.project_path E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/cpu_test2/project_1/project_1.xpr [current_project]
   set_property ip_output_repo E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/cpu_test2/project_1/project_1.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
+OPTRACE "set parameters" END { }
+OPTRACE "add files" START { }
+  add_files -quiet E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/cpu_test2/project_1/project_1.runs/synth_1/riscv_top.dcp
+OPTRACE "read constraints: implementation" START { }
+  read_xdc E:/lky/study/FPGA_Robot_Car/06_hardware/a7_lite.xdc
+OPTRACE "read constraints: implementation" END { }
+OPTRACE "read constraints: implementation_pre" START { }
+OPTRACE "read constraints: implementation_pre" END { }
+OPTRACE "add files" END { }
+OPTRACE "link_design" START { }
+  link_design -top riscv_top -part xc7a35tfgg484-2 
+OPTRACE "link_design" END { }
+OPTRACE "gray box cells" START { }
+OPTRACE "gray box cells" END { }
 OPTRACE "init_design_reports" START { REPORT }
 OPTRACE "init_design_reports" END { }
 OPTRACE "init_design_write_hwdef" START { }
