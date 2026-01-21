@@ -214,7 +214,7 @@ module riscv_top(
     assign handshake_ack = fifo_valid && (!tx_busy_wire);
     uart_mmio u_uart_mmio (
         .clk(sys_clk), .rst_n(sys_rst_n_internal), 
-        .bus_valid(dbus_valid), .bus_wen(bus_uart_wen), .bus_wdata(bus_uart_wdata), .bus_addr(dbus_addr), .uart_ready(bus_uart_ready),
+        .bus_valid(dbus_valid), .bus_write(mem_wen), .bus_wdata(bus_uart_wdata), .bus_addr(dbus_addr), .uart_ready(bus_uart_ready),
         .mmio_rdata(bus_uart_rdata),
         .req_valid(fifo_valid), .req_data(fifo_data), .req_accept(handshake_ack), .tx_busy(tx_busy_wire)
     );

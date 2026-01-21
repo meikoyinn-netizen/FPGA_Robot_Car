@@ -8,7 +8,7 @@ module uart_mmio #(
     input  wire        rst_n,
 
     input  wire        bus_valid,
-    input  wire        bus_wen,
+    input  wire        bus_write,
     input  wire [31:0] bus_wdata,
     input  wire [31:0] bus_addr,
     output wire        uart_ready,
@@ -33,7 +33,7 @@ module uart_mmio #(
     wire fifo_full  = (count == FIFO_DEPTH);
     wire fifo_empty = (count == 0);
 
-    wire write_txdata = bus_valid && bus_wen && (addr_word == UART_TXDATA);
+    wire write_txdata = bus_valid && bus_write && (addr_word == UART_TXDATA);
     assign uart_ready = write_txdata ? (!(fifo_full || tx_busy)) : 1'b1;
     wire write_fire = write_txdata && uart_ready;
 

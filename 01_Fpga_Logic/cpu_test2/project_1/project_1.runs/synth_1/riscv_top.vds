@@ -3,8 +3,8 @@
 # SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
 # IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
 # SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
-# Start of session at: Wed Jan 21 11:19:41 2026
-# Process ID: 4704
+# Start of session at: Wed Jan 21 11:49:11 2026
+# Process ID: 15756
 # Current directory: E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/cpu_test2/project_1/project_1.runs/synth_1
 # Command line: vivado.exe -log riscv_top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source riscv_top.tcl
 # Log file: E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/cpu_test2/project_1/project_1.runs/synth_1/riscv_top.vds
@@ -17,12 +17,12 @@
 # CPU Physical cores:4
 # CPU Logical cores :8
 # Host memory       :8468 MB
-# Swap memory       :5637 MB
-# Total Virtual     :14105 MB
-# Available Virtual :2943 MB
+# Swap memory       :5932 MB
+# Total Virtual     :14400 MB
+# Available Virtual :2592 MB
 #-----------------------------------------------------------
 source riscv_top.tcl -notrace
-create_project: Time (s): cpu = 00:00:10 ; elapsed = 00:00:13 . Memory (MB): peak = 495.953 ; gain = 199.867
+create_project: Time (s): cpu = 00:00:09 ; elapsed = 00:00:12 . Memory (MB): peak = 497.023 ; gain = 200.949
 Command: read_checkpoint -auto_incremental -incremental E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/cpu_test2/project_1/project_1.srcs/utils_1/imports/synth_1/fpga_top.dcp
 INFO: [Vivado 12-5825] Read reference checkpoint from E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/cpu_test2/project_1/project_1.srcs/utils_1/imports/synth_1/fpga_top.dcp for incremental synthesis
 INFO: [Vivado 12-7989] Please ensure there are no constraint changes
@@ -36,9 +36,9 @@ INFO: [Designutils 20-5440] No compile time benefit to using incremental synthes
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 10136
+INFO: [Synth 8-7075] Helper process launched with PID 13020
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:09 ; elapsed = 00:00:15 . Memory (MB): peak = 1352.293 ; gain = 450.352
+Starting RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1350.867 ; gain = 448.555
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'riscv_top' [E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/rtl/top/riscv_top.v:3]
 INFO: [Synth 8-6157] synthesizing module 'my_pc_reg' [E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/rtl/core/Instruction_Fetch/my_pc_reg.v:3]
@@ -170,18 +170,18 @@ WARNING: [Synth 8-7129] Port cpu_addr[3] in module sys_bus is either unconnected
 WARNING: [Synth 8-7129] Port cpu_addr[2] in module sys_bus is either unconnected or has no load
 INFO: [Common 17-14] Message 'Synth 8-7129' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:12 ; elapsed = 00:00:20 . Memory (MB): peak = 1468.289 ; gain = 566.348
+Finished RTL Elaboration : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1467.754 ; gain = 565.441
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:12 ; elapsed = 00:00:21 . Memory (MB): peak = 1468.289 ; gain = 566.348
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1467.754 ; gain = 565.441
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:12 ; elapsed = 00:00:21 . Memory (MB): peak = 1468.289 ; gain = 566.348
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1467.754 ; gain = 565.441
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.027 . Memory (MB): peak = 1468.289 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.031 . Memory (MB): peak = 1467.754 ; gain = 0.000
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
@@ -192,31 +192,31 @@ INFO: [Project 1-236] Implementation specific constraints were found while readi
 Resolution: To avoid this warning, move constraints listed in [.Xil/riscv_top_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1525.555 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1572.203 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.045 . Memory (MB): peak = 1525.555 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 1572.203 ; gain = 0.000
 INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:23 ; elapsed = 00:00:35 . Memory (MB): peak = 1525.555 ; gain = 623.613
+Finished Constraint Validation : Time (s): cpu = 00:00:20 ; elapsed = 00:00:22 . Memory (MB): peak = 1572.203 ; gain = 669.891
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a35tfgg484-2
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:23 ; elapsed = 00:00:35 . Memory (MB): peak = 1525.555 ; gain = 623.613
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:20 ; elapsed = 00:00:22 . Memory (MB): peak = 1572.203 ; gain = 669.891
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:23 ; elapsed = 00:00:35 . Memory (MB): peak = 1525.555 ; gain = 623.613
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:20 ; elapsed = 00:00:22 . Memory (MB): peak = 1572.203 ; gain = 669.891
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:24 ; elapsed = 00:00:36 . Memory (MB): peak = 1525.555 ; gain = 623.613
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:21 ; elapsed = 00:00:23 . Memory (MB): peak = 1572.203 ; gain = 669.891
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
@@ -271,7 +271,7 @@ Start Cross Boundary and Area Optimization
 WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
 INFO: [Synth 8-6851] RAM (u_dmem/ram_reg) has partial Byte Wide Write Enable pattern, however no output register found in fanout of RAM. Recommended to use supported Byte Wide Write Enable template. 
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:42 ; elapsed = 00:00:55 . Memory (MB): peak = 1525.555 ; gain = 623.613
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:34 ; elapsed = 00:00:37 . Memory (MB): peak = 1572.203 ; gain = 669.891
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP, Shift Register and Retiming Reporting
@@ -303,13 +303,13 @@ Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:52 ; elapsed = 00:01:05 . Memory (MB): peak = 1525.555 ; gain = 623.613
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:42 ; elapsed = 00:00:45 . Memory (MB): peak = 1572.203 ; gain = 669.891
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:59 ; elapsed = 00:01:13 . Memory (MB): peak = 1537.758 ; gain = 635.816
+Finished Timing Optimization : Time (s): cpu = 00:00:48 ; elapsed = 00:00:51 . Memory (MB): peak = 1572.203 ; gain = 669.891
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP, Shift Register and Retiming Reporting
@@ -329,27 +329,8 @@ Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
-Found timing loop:
-     0: i_1362/O (LUT2)
-      [E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/rtl/core/Execution/my_alu.v:20]
-     1: i_1362/I1 (LUT2)
-     2: i_902/O (LUT2)
-      [E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/rtl/core/Execution/my_alu.v:20]
-     3: i_902/I1 (LUT2)
-     4: i_1170/O (LUT2)
-      [E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/rtl/core/Execution/my_alu.v:20]
-     5: i_1170/I1 (LUT2)
-     6: i_1362/O (LUT2)
-      [E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/rtl/core/Execution/my_alu.v:20]
-CRITICAL WARNING: [Synth 8-295] found timing loop. [E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/rtl/top/riscv_top.v:3]
-Inferred a: "set_disable_timing -from I1 -to O i_1362"
-Found timing loop:
-     0: i_1362/O (LUT2)
-      [E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/rtl/core/Execution/my_alu.v:20]
-     1: i_1362/O (LUT2)
-CRITICAL WARNING: [Synth 8-295] found timing loop. [E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/rtl/top/riscv_top.v:3]
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:01:00 ; elapsed = 00:01:15 . Memory (MB): peak = 1542.023 ; gain = 640.082
+Finished Technology Mapping : Time (s): cpu = 00:00:49 ; elapsed = 00:00:53 . Memory (MB): peak = 1572.203 ; gain = 669.891
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -367,44 +348,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:01:08 ; elapsed = 00:01:22 . Memory (MB): peak = 1542.023 ; gain = 640.082
+Finished IO Insertion : Time (s): cpu = 00:00:58 ; elapsed = 00:01:01 . Memory (MB): peak = 1572.203 ; gain = 669.891
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:01:08 ; elapsed = 00:01:22 . Memory (MB): peak = 1542.023 ; gain = 640.082
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:58 ; elapsed = 00:01:01 . Memory (MB): peak = 1572.203 ; gain = 669.891
 ---------------------------------------------------------------------------------
-Found timing loop:
-     0: \pc[31]_i_13 /O (LUT6)
-      [E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/rtl/core/Execution/my_alu.v:20]
-     1: \pc[31]_i_13 /I1 (LUT6)
-     2: \pc[31]_i_13 /O (LUT6)
-CRITICAL WARNING: [Synth 8-295] found timing loop. [E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/rtl/top/riscv_top.v:3]
-Inferred a: "set_disable_timing -from I1 -to O \pc[31]_i_13 "
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:01:08 ; elapsed = 00:01:23 . Memory (MB): peak = 1542.023 ; gain = 640.082
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:58 ; elapsed = 00:01:01 . Memory (MB): peak = 1572.203 ; gain = 669.891
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:01:08 ; elapsed = 00:01:23 . Memory (MB): peak = 1542.023 ; gain = 640.082
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:58 ; elapsed = 00:01:02 . Memory (MB): peak = 1572.203 ; gain = 669.891
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:01:08 ; elapsed = 00:01:23 . Memory (MB): peak = 1542.023 ; gain = 640.082
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:58 ; elapsed = 00:01:02 . Memory (MB): peak = 1572.203 ; gain = 669.891
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:01:08 ; elapsed = 00:01:23 . Memory (MB): peak = 1542.023 ; gain = 640.082
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:58 ; elapsed = 00:01:02 . Memory (MB): peak = 1572.203 ; gain = 669.891
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -422,14 +396,14 @@ Report Cell Usage:
 +------+----------+------+
 |1     |BUFG      |     1|
 |2     |CARRY4    |    55|
-|3     |LUT1      |     8|
-|4     |LUT2      |    77|
-|5     |LUT3      |    92|
-|6     |LUT4      |   137|
-|7     |LUT5      |   202|
-|8     |LUT6      |   935|
-|9     |MUXF7     |    55|
-|10    |MUXF8     |    18|
+|3     |LUT1      |     7|
+|4     |LUT2      |    74|
+|5     |LUT3      |    91|
+|6     |LUT4      |   119|
+|7     |LUT5      |   209|
+|8     |LUT6      |   938|
+|9     |MUXF7     |    71|
+|10    |MUXF8     |    26|
 |11    |RAM256X1S |   512|
 |12    |RAM32M    |    10|
 |13    |RAM32X1D  |     4|
@@ -440,31 +414,30 @@ Report Cell Usage:
 |18    |OBUF      |     2|
 +------+----------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:01:08 ; elapsed = 00:01:23 . Memory (MB): peak = 1542.023 ; gain = 640.082
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:58 ; elapsed = 00:01:02 . Memory (MB): peak = 1572.203 ; gain = 669.891
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 3 critical warnings and 151 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:55 ; elapsed = 00:01:18 . Memory (MB): peak = 1542.023 ; gain = 582.816
-Synthesis Optimization Complete : Time (s): cpu = 00:01:09 ; elapsed = 00:01:23 . Memory (MB): peak = 1542.023 ; gain = 640.082
+Synthesis finished with 0 errors, 0 critical warnings and 151 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:45 ; elapsed = 00:00:59 . Memory (MB): peak = 1572.203 ; gain = 565.441
+Synthesis Optimization Complete : Time (s): cpu = 00:00:58 ; elapsed = 00:01:02 . Memory (MB): peak = 1572.203 ; gain = 669.891
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.042 . Memory (MB): peak = 1542.023 ; gain = 0.000
-INFO: [Netlist 29-17] Analyzing 654 Unisim elements for replacement
-INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.049 . Memory (MB): peak = 1572.203 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 678 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1542.023 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1572.203 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
   A total of 526 instances were transformed.
   RAM256X1S => RAM256X1S (MUXF7(x2), MUXF8, RAMS64E(x4)): 512 instances
   RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 10 instances
   RAM32X1D => RAM32X1D (RAMD32(x2)): 4 instances
 
-Synth Design complete | Checksum: a4d84a9c
+Synth Design complete | Checksum: 4063eca9
 INFO: [Common 17-83] Releasing license: Synthesis
-45 Infos, 103 Warnings, 3 Critical Warnings and 0 Errors encountered.
+45 Infos, 103 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:01:17 ; elapsed = 00:01:52 . Memory (MB): peak = 1542.023 ; gain = 1041.695
-INFO: [runtcl-6] Synthesis results are not added to the cache due to CRITICAL_WARNING
-Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.135 . Memory (MB): peak = 1542.023 ; gain = 0.000
+synth_design: Time (s): cpu = 00:01:06 ; elapsed = 00:01:13 . Memory (MB): peak = 1572.203 ; gain = 1070.129
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.109 . Memory (MB): peak = 1572.203 ; gain = 0.000
 INFO: [Common 17-1381] The checkpoint 'E:/lky/study/FPGA_Robot_Car/01_Fpga_Logic/cpu_test2/project_1/project_1.runs/synth_1/riscv_top.dcp' has been generated.
 INFO: [Vivado 12-24828] Executing command : report_utilization -file riscv_top_utilization_synth.rpt -pb riscv_top_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Wed Jan 21 11:22:14 2026...
+INFO: [Common 17-206] Exiting Vivado at Wed Jan 21 11:50:45 2026...
