@@ -4,6 +4,7 @@
 module sys_bus(
     // Master: CPU
     input  wire [31:0] cpu_addr,
+    input  wire        cpu_valid,
     input  wire [31:0] cpu_wdata,
     input  wire [3:0]  cpu_wmask,
     input  wire        cpu_wen,
@@ -37,10 +38,10 @@ module sys_bus(
 
     wire [3:0] addr_head = cpu_addr[31:28];
 
-    // 写使能分发
-    assign dmem_wen = cpu_wen && (addr_head == ADDR_DMEM);
-    assign gpio_wen = cpu_wen && (addr_head == ADDR_GPIO);
-    assign uart_wen = cpu_wen && (addr_head == ADDR_UART);
+    // 写使能分发 (仅在 valid 且 ready 时生效)
+    assign dmem_wen = cpu_valid && cpu_wen && bus_ready && (addr_head == ADDR_DMEM);
+    assign gpio_wen = cpu_valid && cpu_wen && bus_ready && (addr_head == ADDR_GPIO);
+    assign uart_wen = cpu_valid && cpu_wen && bus_ready && (addr_head == ADDR_UART);
 
     // 写数据广播
     assign uart_wdata = cpu_wdata;
@@ -62,7 +63,7 @@ module sys_bus(
         bus_ready = 1'b1;
         case (addr_head)
             ADDR_UART: begin
-                if (cpu_wen) bus_ready = uart_ready;
+                if (cpu_valid && cpu_wen) bus_ready = uart_ready;
                 else         bus_ready = 1'b1;
             end
             ADDR_IMEM,

@@ -194,7 +194,7 @@ module riscv_top(
 
     // 系统总线
     sys_bus u_sys_bus (
-        .cpu_addr(dbus_addr), .cpu_wdata(dbus_wdata), .cpu_wmask(dbus_wstrb), .cpu_wen(mem_wen && dbus_ready), .cpu_rdata(bus_read_data),
+        .cpu_addr(dbus_addr), .cpu_valid(dbus_valid), .cpu_wdata(dbus_wdata), .cpu_wmask(dbus_wstrb), .cpu_wen(mem_wen), .cpu_rdata(bus_read_data),
         .bus_ready(dbus_ready),
         .imem_rdata(bus_imem_rdata),
         .dmem_rdata(bus_dmem_rdata), .dmem_wen(bus_dmem_wen), .dmem_wmask(dmem_wmask),
