@@ -33,6 +33,15 @@ module riscv_top(
     wire [3:0]  dmem_wmask;
     wire [31:0] bus_write_data;
 
+    // D-Bus 主接口抽象
+    wire        dbus_valid;
+    wire        dbus_ready;
+    wire [31:0] dbus_addr;
+    wire [31:0] dbus_wdata;
+    wire [3:0]  dbus_wstrb;
+    wire [31:0] dbus_rdata;
+    wire        dbus_wait;
+
     // 跳转相关信号
     wire        dec_jump, dec_jalr; // 来自 Decoder
     wire [31:0] jump_target_addr;   // 计算出的跳转目标
@@ -43,6 +52,7 @@ module riscv_top(
     wire        bus_uart_wen;
     wire [31:0] bus_uart_wdata;
     wire [31:0] bus_uart_rdata; 
+    wire        bus_uart_ready;
     wire        fifo_valid, tx_busy_wire, handshake_ack;
     wire [7:0]  fifo_data;
 
@@ -51,7 +61,7 @@ module riscv_top(
     wire        bus_dmem_wen;
     
     // 硬件流控 Stall
-    wire cpu_stall = bus_uart_wen & tx_busy_wire;
+    assign dbus_wait = dbus_valid && !dbus_ready;
 
     // =========================================================
     // 2. 逻辑实现与模块实例化
@@ -81,7 +91,7 @@ module riscv_top(
     my_pc_reg u_pc_reg (
         .clk       (sys_clk), 
         .rst_n     (sys_rst_n_internal), 
-        .stall     (cpu_stall), 
+        .stall     (dbus_wait), 
         
         // 连接跳转信号
         .jump_flag (pc_jump_flag),       // 允许 JAL/JALR 与分支跳转
@@ -114,7 +124,7 @@ module riscv_top(
 
     // 寄存器堆
     my_regfile u_regfile (
-        .clk(sys_clk), .we_i(reg_wen), 
+        .clk(sys_clk), .we_i(reg_wen && !dbus_wait), 
         .rs1_addr_i(rs1_addr), .rs2_addr_i(rs2_addr), .rd_addr_i(rd_addr), 
         .rd_data_i(wb_data), 
         .rs1_data_o(rs1_data), .rs2_data_o(rs2_data)
@@ -175,13 +185,21 @@ module riscv_top(
     assign wb_data = mem_to_reg ? load_data : (dec_jump ? pc_plus_4 : alu_result);
     assign cpu_wmask = store_mask;
 
+    // D-Bus 信号绑定
+    assign dbus_valid = mem_wen || mem_to_reg;
+    assign dbus_addr = alu_result;
+    assign dbus_wdata = bus_write_data;
+    assign dbus_wstrb = cpu_wmask;
+    assign dbus_rdata = bus_read_data;
+
     // 系统总线
     sys_bus u_sys_bus (
-        .cpu_addr(alu_result), .cpu_wdata(bus_write_data), .cpu_wmask(cpu_wmask), .cpu_wen(mem_wen), .cpu_rdata(bus_read_data),
+        .cpu_addr(dbus_addr), .cpu_wdata(dbus_wdata), .cpu_wmask(dbus_wstrb), .cpu_wen(mem_wen && dbus_ready), .cpu_rdata(bus_read_data),
+        .bus_ready(dbus_ready),
         .imem_rdata(bus_imem_rdata),
         .dmem_rdata(bus_dmem_rdata), .dmem_wen(bus_dmem_wen), .dmem_wmask(dmem_wmask),
         .gpio_rdata(32'b0), .gpio_wen(),
-        .uart_rdata(bus_uart_rdata), .uart_wen(bus_uart_wen), .uart_wdata(bus_uart_wdata) 
+        .uart_rdata(bus_uart_rdata), .uart_ready(bus_uart_ready), .uart_wen(bus_uart_wen), .uart_wdata(bus_uart_wdata) 
     );
 
     // DMEM (确保扩容到 4096)
@@ -196,7 +214,8 @@ module riscv_top(
     assign handshake_ack = fifo_valid && (!tx_busy_wire);
     uart_mmio u_uart_mmio (
         .clk(sys_clk), .rst_n(sys_rst_n_internal), 
-        .bus_wen(bus_uart_wen), .bus_wdata(bus_uart_wdata), .mmio_rdata(bus_uart_rdata),
+        .bus_valid(dbus_valid), .bus_wen(bus_uart_wen), .bus_wdata(bus_uart_wdata), .bus_addr(dbus_addr), .uart_ready(bus_uart_ready),
+        .mmio_rdata(bus_uart_rdata),
         .req_valid(fifo_valid), .req_data(fifo_data), .req_accept(handshake_ack), .tx_busy(tx_busy_wire)
     );
 

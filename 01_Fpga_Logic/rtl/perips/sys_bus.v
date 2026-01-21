@@ -8,6 +8,7 @@ module sys_bus(
     input  wire [3:0]  cpu_wmask,
     input  wire        cpu_wen,
     output reg  [31:0] cpu_rdata,
+    output reg         bus_ready,
 
     // ★★★ 关键修复 1: 必须定义这个输入端口 ★★★
     input  wire [31:0] imem_rdata,
@@ -23,6 +24,7 @@ module sys_bus(
 
     // Slave 3: UART
     input  wire [31:0] uart_rdata,
+    input  wire        uart_ready,
     output wire        uart_wen,
     output wire [31:0] uart_wdata
 );
@@ -52,6 +54,28 @@ module sys_bus(
             ADDR_GPIO: cpu_rdata = gpio_rdata;
             ADDR_UART: cpu_rdata = uart_rdata;
             default:   cpu_rdata = 32'b0;
+        endcase
+    end
+
+    // ★★★ ready 握手逻辑 ★★★
+    always @(*) begin
+        bus_ready = 1'b1;
+        case (addr_head)
+            ADDR_UART: begin
+                if (cpu_wen) bus_ready = uart_ready;
+                else         bus_ready = 1'b1;
+            end
+            ADDR_IMEM,
+            ADDR_DMEM,
+            ADDR_GPIO: begin
+                bus_ready = 1'b1;
+            end
+            default: begin
+                bus_ready = 1'b1;
+`ifndef SYNTHESIS
+                $display("[sys_bus] bad addr: 0x%08x", cpu_addr);
+`endif
+            end
         endcase
     end
 
